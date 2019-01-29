@@ -1,4 +1,4 @@
-def Candy
+class Candy
 
     attr_reader :name
     attr_accessor :is_shelved

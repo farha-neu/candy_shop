@@ -19,11 +19,10 @@ def display_menu
         puts "1. Add shelf"
         puts "2. Remove shelf"
         puts "3. Add candy"
-        puts "4. Remove candy"
-        puts "5. Move candy to shelf"
-        puts "6. Remove candy from shelf"
-        puts "7. View all candies"
-        puts "8. Exit"
+        puts "4. Move candy to shelf"
+        puts "5. Remove candy from shelf"
+        puts "6. View all candies"
+        puts "7. Exit"
         print "\nEnter option[e.g. 1]> "
         select_option
     end
@@ -38,16 +37,14 @@ def select_option
         when 2
             remove_shelf
         when 3
-            puts "Candy added"
+            add_candy
         when 4
-            puts "Candy removed"
+           move_candy_to_shelf
         when 5
-            puts "Moved candy to shelf"
+            remove_candy_from_shelf
         when 6
-            puts "Removed candy from shelf"
+           list_candies
         when 7
-            puts "Listing all candies"
-        when 8
             puts "Leaving candy shop"
             exit!
         else
@@ -74,16 +71,78 @@ def remove_shelf
 end
 
 def remove_shelf_with_input_validation
-    puts "Enter the shelf number to remove:[e.g. 2]"
+    puts "Enter the shelf number to remove:[e.g. 1]"
     print "> "
     shelf_number = gets.chomp.to_i
-    is_valid_option = (1..$shop.shelves.length+1).any? {|n| n == shelf_number}
-    if(is_valid_option)
+    
+    if(find_input_validity($shop.shelves, shelf_number))
        $shop.remove_shelf(shelf_number)
     else
         puts "\nEnter a valid shelf number\n\n"
         remove_shelf_with_input_validation
     end
+end
+
+def add_candy
+  puts "Enter the name of candy:"
+  print ">"
+  candy_name = gets.chomp
+  $shop.add_candy(candy_name)
+end
+
+
+def move_candy_to_shelf
+    if($shop.unshelved_candies.length<=0)
+        puts "\nNo unshelved candies found!"
+    elsif($shop.shelves.length<=0)
+        puts "\nNo shelves found!"
+    else
+        $shop.list_unshelved_candies
+        candy_number = enter_candy_number
+        $shop.display_shelves
+        shelf_number = enter_shelf_number
+        $shop.move_candy_to_shelf(candy_number,shelf_number)
+    end
+end
+
+def enter_candy_number
+    loop do
+        puts "Step 1: Enter the candy number [e.g. 1]"
+        print ">"
+        candy_number = gets.chomp.to_i
+        is_valid = find_input_validity($shop.unshelved_candies,candy_number)
+        unless(is_valid)
+            puts "\nEnter a valid candy number\n"
+            puts
+        end
+        return candy_number if is_valid
+    end
+end
+
+def enter_shelf_number
+    loop do
+        puts "Step 2: Enter the shelf number to move your candy [e.g. 1]"
+        print ">"
+        shelf_number = gets.chomp.to_i
+        is_valid = find_input_validity($shop.shelves,shelf_number)
+        unless(is_valid)
+            puts "\nEnter a valid shelf number\n"
+            puts
+        end
+        return shelf_number if is_valid
+    end
+end
+
+def remove_candy_from_shelf
+end
+
+def list_candies
+    $shop.list_candies
+    $shop.list_shelved_candies
+end
+
+def find_input_validity(arr,input)
+    (1..arr.length+1).any? {|item| item == input}
 end
 
 
