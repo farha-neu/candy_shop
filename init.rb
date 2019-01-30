@@ -134,6 +134,27 @@ def enter_shelf_number
 end
 
 def remove_candy_from_shelf
+    if($shop.count_shelved_candies==0)
+        puts "No candies found in shelf!"
+    else
+        $shop.display_candies_with_shelve
+        loop do
+            puts "Enter the candy number to remove"
+            print ">"
+            candy_number = gets.chomp.to_i
+            puts
+            is_valid = (1..$shop.count_shelved_candies).any? {|item| item == candy_number}
+            unless(is_valid)
+                puts "\nEnter a valid candy number\n"
+                puts
+            end
+            if is_valid
+                $shop.move_candy_from_shelf(candy_number)
+                break
+            end
+        end
+    end
+    
 end
 
 def list_candies

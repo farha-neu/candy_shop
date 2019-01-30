@@ -1,6 +1,7 @@
 class Shop
 
     attr_reader :shelves, :unshelved_candies
+   
 
     def initialize
         @shelves = []
@@ -51,13 +52,36 @@ class Shop
     end
 
 
+    def move_candy_from_shelf(candy_number)
+        i = 0
+       for shelf in @shelves
+           if(shelf.candies.length>0)
+              index = -1
+              for candy in shelf.candies
+                i+=1
+                index+=1
+                if(move(i,index,candy_number,candy,shelf))
+                    break
+                end
+              end
+           end
+       end
+    end
+
+    def move(i,index,candy_number,candy,shelf)
+        if(i==candy_number)
+            @unshelved_candies << candy
+            shelf.remove_candy(index)
+            return true
+         end
+    end
+
+
     def list_candies
         if(@unshelved_candies.length>0)
             display("Unshelved candies",@unshelved_candies)
         end
     end
-
-   
 
     def list_shelved_candies
         if(count_shelved_candies>0)
@@ -65,11 +89,17 @@ class Shop
             puts "      Shelved Candies: #{count_shelved_candies}"
             puts "------------------------------"
             for shelf in @shelves
-                shelf.display_candies
+                shelf.display_candies(i=0)
             end
         end
     end
 
+   def display_candies_with_shelve
+     i = 0
+     for shelf in @shelves
+       i = shelf.display_candies(i)
+     end
+   end
 
 
     def count_shelved_candies

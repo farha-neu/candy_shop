@@ -10,22 +10,23 @@ class Shelf
     def add_candy(candy)
         candy.is_shelved = true
         @candies << candy
-        puts "\nCandy #{candy.name} moved to shelf #{@name}!"
+        puts "Candy #{candy.name} moved to shelf #{@name}!"
     end
 
-    def remove_candy
-
+    def remove_candy(candy_index)
+       @candies.delete_at(candy_index)
+       puts "\nCandy removed from shelf!"
     end
    
 
-    def display_candies
+    def display_candies(i)
         if(@candies.length > 0)
-            puts "Candies in Shelf #{@name}:"
-            i = 0
+            puts "\nCandies in Shelf #{@name}:"
             for candy in @candies
                 i+=1
                 puts "#{i}. #{candy.name}"
             end
         end
+        i
     end
 end
