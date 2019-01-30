@@ -19,12 +19,22 @@ class Shelf
     end
    
 
-    def display_candies(i)
+    def display_candies
+        i = 0
         if(@candies.length > 0)
             puts "\nCandies in Shelf #{@name}:"
             for candy in @candies
                 i+=1
                 puts "#{i}. #{candy.name}"
+            end
+        end
+    end
+
+    def display_candies_for_removal(i)
+        if(@candies.length > 0)
+            for candy in @candies
+                i+=1
+                puts "#{i}. #{candy.name} [Shelf #{name}]"
             end
         end
         i

@@ -60,22 +60,15 @@ class Shop
               for candy in shelf.candies
                 i+=1
                 index+=1
-                if(move(i,index,candy_number,candy,shelf))
+                if(i==candy_number)
+                    @unshelved_candies << candy
+                    shelf.remove_candy(index)
                     break
-                end
+                 end
               end
            end
        end
     end
-
-    def move(i,index,candy_number,candy,shelf)
-        if(i==candy_number)
-            @unshelved_candies << candy
-            shelf.remove_candy(index)
-            return true
-         end
-    end
-
 
     def list_candies
         if(@unshelved_candies.length>0)
@@ -89,7 +82,7 @@ class Shop
             puts "      Shelved Candies: #{count_shelved_candies}"
             puts "------------------------------"
             for shelf in @shelves
-                shelf.display_candies(i=0)
+                shelf.display_candies
             end
         end
     end
@@ -97,7 +90,7 @@ class Shop
    def display_candies_with_shelve
      i = 0
      for shelf in @shelves
-       i = shelf.display_candies(i)
+        i = shelf.display_candies_for_removal(i)
      end
    end
 
