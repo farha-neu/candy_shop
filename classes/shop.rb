@@ -113,7 +113,6 @@ class Shop
             if(shelf.candies.length > 0)
                 shelf.candies.map {|candy| candy.is_shelved=false }
                 @unshelved_candies+=shelf.candies
-                puts @unshelved_candies
             end
         end     
 
