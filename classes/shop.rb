@@ -14,9 +14,6 @@ class Shop
              @shelves << Shelf.new(name)
              puts "\nNew Shelf #{name} added."
              true
-        else
-            puts "\nShelf exists. Choose a different name."
-            false
         end
     end
 
@@ -70,6 +67,15 @@ class Shop
        end
     end
 
+    def display_all_candies
+        if(@unshelved_candies.length<=0 && count_shelved_candies<=0)
+            puts "No candies to display"
+        else
+            list_candies
+            list_shelved_candies
+        end
+    end
+
     def list_candies
         if(@unshelved_candies.length>0)
             display("Unshelved candies",@unshelved_candies)
@@ -120,10 +126,8 @@ class Shop
             puts "\n------------------------------"
             puts "    #{name}: #{arr.length}     "
             puts "------------------------------"
-            i = 0
-            for item in arr
-               i+=1
-               puts "#{i}. #{item.name}"
+            arr.each.with_index(1) do |candy, index|
+               puts "#{index}. #{candy.name}"
             end
             puts
         end

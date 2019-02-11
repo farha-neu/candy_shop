@@ -53,11 +53,15 @@ def select_option
 end
 
 def add_new_shelf
-    puts "Enter the name of shelf:"
-    print "> "
-    shelf_name = gets.chomp
-    unless($shop.add_shelf(shelf_name))
-        add_new_shelf
+    loop do
+       puts "Enter the name of shelf:"
+       print "> "
+       shelf_name = gets.chomp 
+       if($shop.add_shelf(shelf_name))
+          return
+       else
+         puts "\nShelf exists. Choose a different name."
+       end
     end
 end
 
@@ -158,8 +162,7 @@ def remove_candy_from_shelf
 end
 
 def list_candies
-    $shop.list_candies
-    $shop.list_shelved_candies
+    $shop.display_all_candies
 end
 
 def find_input_validity(arr,input)
