@@ -1,11 +1,12 @@
 class Candy
 
     attr_reader :name
-    attr_accessor :is_shelved
+    attr_accessor :shelved
 
-    def initialize(name, is_shelved)
+     # Constructs candy object with name and shelved
+    def initialize(name, shelved)
         @name = name
-        @is_shelved = is_shelved
+        @shelved = shelved
     end
     
 end
