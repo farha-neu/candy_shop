@@ -30,13 +30,13 @@ class Shelf
         end
     end
 
-    def display_candies_for_removal(i)
+    def display_candies_for_removal(index)
         if(@candies.length > 0)
             for candy in @candies
-                i+=1
-                puts "#{i}. #{candy.name} [Shelf #{name}]"
+                index+=1
+                puts "#{index}. #{candy.name} [Shelf #{name}]"
             end
         end
-        i
+        index
     end
 end

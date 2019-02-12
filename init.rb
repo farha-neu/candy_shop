@@ -6,6 +6,7 @@ require_relative 'classes/candy'
 
 
 
+
 def display_welcome_message
     puts "-----------------------------------------"
     puts "|        Welcome to Candy Shop           |"
@@ -148,13 +149,12 @@ def remove_candy_from_shelf
             candy_number = gets.chomp.to_i
             puts
             is_valid = (1..$shop.count_shelved_candies).any? {|item| item == candy_number}
-            unless(is_valid)
-                puts "\nEnter a valid candy number\n"
-                puts
-            end
             if is_valid
                 $shop.move_candy_from_shelf(candy_number)
                 break
+            else
+                puts "\nEnter a valid candy number\n"
+                puts
             end
         end
     end

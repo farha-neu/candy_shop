@@ -50,21 +50,17 @@ class Shop
 
 
     def move_candy_from_shelf(candy_number)
-        i = 0
-       for shelf in @shelves
-           if(shelf.candies.length>0)
-              index = -1
-              for candy in shelf.candies
-                i+=1
-                index+=1
-                if(i==candy_number)
-                    @unshelved_candies << candy
-                    shelf.remove_candy(index)
-                    break
-                 end
-              end
-           end
-       end
+        count = 0
+        @shelves.each.with_index(1) do |shelf,num|
+            shelf.candies.each.with_index(0) do |candy,index|
+                if(count == candy_number -1)
+                     @unshelved_candies << candy
+                     shelf.remove_candy(index)
+                     return nil
+                end
+                count+=1
+            end
+        end
     end
 
     def display_all_candies
@@ -73,23 +69,6 @@ class Shop
         else
             list_candies
             list_shelved_candies
-        end
-    end
-
-    def list_candies
-        if(@unshelved_candies.length>0)
-            display("Unshelved candies",@unshelved_candies)
-        end
-    end
-
-    def list_shelved_candies
-        if(count_shelved_candies>0)
-            puts "\n------------------------------"
-            puts "      Shelved Candies: #{count_shelved_candies}"
-            puts "------------------------------"
-            for shelf in @shelves
-                shelf.display_candies
-            end
         end
     end
 
@@ -130,5 +109,22 @@ class Shop
                puts "#{index}. #{candy.name}"
             end
             puts
+        end
+
+        def list_candies
+            if(@unshelved_candies.length>0)
+                display("Unshelved candies",@unshelved_candies)
+            end
+        end
+    
+        def list_shelved_candies
+            if(count_shelved_candies>0)
+                puts "\n------------------------------"
+                puts "      Shelved Candies: #{count_shelved_candies}"
+                puts "------------------------------"
+                for shelf in @shelves
+                    shelf.display_candies
+                end
+            end
         end
 end
